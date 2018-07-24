@@ -32,10 +32,6 @@ public class StandardRoutes {
                             p(
                                     text("Register will go "),
                                     a("here").withHref("/register")
-                            ),
-                            p(
-                                    text("Logout "),
-                                    a("here").withHref("/request/logout")
                             )
                     )
             ));
@@ -53,9 +49,15 @@ public class StandardRoutes {
                             p(
                                     text("livechat will go "),
                                     a("here").withHref("/livechat")
+                            ),
+                            p(
+                                    text("Logout "),
+                                    a("here").withHref("/request/logout")
                             )
                     )
             ));
         }
     };
+
+
 }
