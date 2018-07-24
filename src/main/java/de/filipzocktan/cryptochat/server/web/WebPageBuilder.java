@@ -13,6 +13,16 @@ public class WebPageBuilder {
 
     public static String getSite(String undersite, Request req, Response resp) {
         String renderedSite = fileAsString("/website/basesite.html").render();
+        String cookietoken = req.cookie("cryptochatserver.loginsession");
+        String username = "";
+        if (UserHandler.loggedinUsers.containsKey(cookietoken)) {
+            username = UserHandler.loggedinUsers.get(cookietoken).getUsername();
+        }
+        if (username.equals("")) {
+            renderedSite = renderedSite.replaceAll("ITEM", fileAsString("/website/parts/menu/loggedout.html").render());
+        } else {
+            renderedSite = renderedSite.replaceAll("ITEM", fileAsString("/website/parts/menu/loggedin.html").render());
+        }
         switch (undersite.toUpperCase()) {
             case "LOGIN":
 
