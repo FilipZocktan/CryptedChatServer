@@ -17,11 +17,16 @@ public class Web extends Spark {
             if (!UserHandler.loggedinUsers.containsKey(request.cookie("cryptochatserver.loginsession"))) {
                 response.removeCookie("/", "cryptochatserver.loginsession");
             }
+//            System.out.println(request.pathInfo());
         });
         get("/", StandardRoutes.index);
-        get("/login", ((request, response) -> fileAsString("/website/login.html").render()));
-        get("/logout", (request, response) -> fileAsString("/website/logout.html").render());
-        get("/register", (request, response) -> fileAsString("/website/register.html").render());
+        get("/login", StandardRoutes.login);
+        get("/logout", (request, response) -> {
+            response.redirect("/request/logout");
+            return fileAsString("/website/errors/500.html");
+        });
+        get("/register", StandardRoutes.register);
+        get("/loggedout", StandardRoutes.logout);
 
         path("/request", () -> {
             post("/login", UserHandler.login);

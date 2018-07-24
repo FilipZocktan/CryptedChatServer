@@ -7,8 +7,6 @@ package de.filipzocktan.cryptochat.server.web;
 
 import spark.Route;
 
-import static j2html.TagCreator.*;
-
 public class StandardRoutes {
 
     public static Route index = (request, response) -> {
@@ -18,46 +16,16 @@ public class StandardRoutes {
             username = UserHandler.loggedinUsers.get(cookietoken).getUsername();
         }
         if (username.equals("")) {
-            return document(html(
-                    head(
-                            title("HomePage")
-                    ),
-                    body(
-                            h1("Landing Page for CryptoChatServer"),
-                            p("Information will go here"),
-                            p(
-                                    text("Login will go "),
-                                    a("here").withHref("/login")
-                            ),
-                            p(
-                                    text("Register will go "),
-                                    a("here").withHref("/register")
-                            )
-                    )
-            ));
+            return WebPageBuilder.getSite("inDexout", request, response);
         } else {
-            return document(html(
-                    head(
-                            title("HomePage")
-                    ),
-                    body(
-                            h1("Landing Page for CryptoChatServer"),
-                            p("Information will go here"),
-                            p(
-                                    text("Welcome " + username + "!")
-                            ),
-                            p(
-                                    text("livechat will go "),
-                                    a("here").withHref("/livechat")
-                            ),
-                            p(
-                                    text("Logout "),
-                                    a("here").withHref("/request/logout")
-                            )
-                    )
-            ));
+            return WebPageBuilder.getSite("indexin", request, response);
         }
     };
 
+    public static Route login = (request, response) -> WebPageBuilder.getSite("LOGIN", request, response);
+
+    public static Route register = (request, response) -> WebPageBuilder.getSite("REGISTER", request, response);
+
+    public static Route logout = (request, response) -> WebPageBuilder.getSite("logout", request, response);
 
 }

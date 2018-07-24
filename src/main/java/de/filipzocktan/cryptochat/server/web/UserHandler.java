@@ -55,7 +55,7 @@ public class UserHandler {
         if (loggedinUsers.containsKey(cookietoken)) {
             loggedinUsers.remove(cookietoken);
             response.removeCookie("/", "cryptochatserver.loginsession");
-            response.redirect("/logout");
+            response.redirect("/loggedout");
         } else {
             response.redirect("/");
         }
