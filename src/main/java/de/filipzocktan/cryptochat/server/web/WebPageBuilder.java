@@ -49,10 +49,10 @@ class WebPageBuilder {
 
                 break;
             case "INDEXIN":
-                renderedSite = renderedSite.replaceAll("/CONTENT", "You're logged in.");
+                renderedSite = renderedSite.replaceAll("/CONTENT", fileAsString("/website/parts/content/index_content_loggedin.html").render());
                 break;
             case "INDEXOUT":
-                renderedSite = renderedSite.replaceAll("/CONTENT", "You're not logged in.");
+                renderedSite = renderedSite.replaceAll("/CONTENT", fileAsString("/website/parts/content/index_content_loggedout.html").render());
                 break;
             case "LOGOUT":
                 renderedSite = renderedSite.replaceAll("HEADCONTENT", "<meta http-equiv=\"refresh\" content=\"5; /\">");
