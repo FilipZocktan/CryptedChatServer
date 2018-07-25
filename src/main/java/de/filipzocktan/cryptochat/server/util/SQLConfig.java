@@ -32,7 +32,7 @@ public class SQLConfig {
         }
     }
 
-    public void reloadConfig() throws IOException {
+    private void reloadConfig() throws IOException {
         if (!config.exists()) {
             config.getParentFile().mkdirs();
             config.createNewFile();
@@ -69,7 +69,7 @@ public class SQLConfig {
         reloadConnection();
     }
 
-    public void reloadConnection() {
+    private void reloadConnection() {
 
         try {
             sqlConnection = DriverManager.getConnection("jdbc:mysql://" + getHost() + ":" + getPort() + "/" + getSchema() + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=CET", getUser(), getPassword());
@@ -97,23 +97,23 @@ public class SQLConfig {
         }
     }
 
-    public String getHost() {
+    private String getHost() {
         return host;
     }
 
-    public String getPort() {
+    private String getPort() {
         return port;
     }
 
-    public String getSchema() {
+    private String getSchema() {
         return schema;
     }
 
-    public String getUser() {
+    private String getUser() {
         return user;
     }
 
-    public String getPassword() {
+    private String getPassword() {
         return password;
     }
 

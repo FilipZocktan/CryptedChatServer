@@ -7,9 +7,9 @@ package de.filipzocktan.cryptochat.server.web;
 
 import spark.Route;
 
-public class StandardRoutes {
+class StandardRoutes {
 
-    public static Route index = (request, response) -> {
+    static Route index = (request, response) -> {
         String cookietoken = request.cookie("cryptochatserver.loginsession");
         String username = "";
         if (UserHandler.loggedinUsers.containsKey(cookietoken)) {
@@ -22,10 +22,10 @@ public class StandardRoutes {
         }
     };
 
-    public static Route login = (request, response) -> WebPageBuilder.getSite("LOGIN", request, response);
+    static Route login = (request, response) -> WebPageBuilder.getSite("LOGIN", request, response);
 
-    public static Route register = (request, response) -> WebPageBuilder.getSite("REGISTER", request, response);
+    static Route register = (request, response) -> WebPageBuilder.getSite("REGISTER", request, response);
 
-    public static Route logout = (request, response) -> WebPageBuilder.getSite("logout", request, response);
+    static Route logout = (request, response) -> WebPageBuilder.getSite("logout", request, response);
 
 }

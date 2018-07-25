@@ -34,11 +34,13 @@ public class Web extends Spark {
             post("/register", UserHandler.register);
         });
 
+        after((request, response) -> response.header("Content-Encoding", "gzip"));
+
         notFound(((request, response) -> fileAsString("/website/errors/404.html").render()));
         internalServerError(((request, response) -> fileAsString("/website/errors/500.html").render()));
     }
 
-    static int getHerokuAssignedPort() {
+    private static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));

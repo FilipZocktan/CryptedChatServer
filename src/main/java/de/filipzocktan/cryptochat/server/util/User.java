@@ -45,30 +45,24 @@ public class User {
         return sockets;
     }
 
-    public String getNickname() {
+    private String getNickname() {
         return nickname;
     }
 
-    public void setNickname(String nickname) {
+    private void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
     public boolean hasUsername() {
         if (username == null) {
             return false;
-        } else if (username == "") {
-            return false;
-        }
-        return true;
+        } else return !username.equals("");
     }
 
-    public boolean hasNickname() {
+    private boolean hasNickname() {
         if (nickname == null) {
             return false;
-        } else if (nickname == "") {
-            return false;
-        }
-        return true;
+        } else return !nickname.equals("");
     }
 
     public PublicKey getPublicKey() {
@@ -80,9 +74,7 @@ public class User {
         X509EncodedKeySpec spec = new X509EncodedKeySpec(key);
         try {
             pubKey1 = KeyFactory.getInstance("RSA").generatePublic(spec);
-        } catch (InvalidKeySpecException e) {
-            pubKey1 = null;
-        } catch (NoSuchAlgorithmException e) {
+        } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
             pubKey1 = null;
         }
         this.pubKey = pubKey1;
@@ -97,7 +89,7 @@ public class User {
         User user_from = msg.getUser();
         String str_msg = msg.getMessage();
         try {
-            String from_name = "";
+            String from_name;
             if (user_from.hasNickname()) {
                 from_name = user_from.getNickname();
             } else if (user_from.hasUsername()) {
@@ -110,7 +102,6 @@ public class User {
             getSockets().getChatOut().flush();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
         }
     }
 }

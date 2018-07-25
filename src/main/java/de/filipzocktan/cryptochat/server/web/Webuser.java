@@ -4,22 +4,16 @@
 
 package de.filipzocktan.cryptochat.server.web;
 
-public class Webuser {
+class Webuser {
 
     private String username;
-    private String cookietoken;
 
-    public Webuser(String username, String cookietoken){
+    Webuser(String username) {
 
         this.username = username;
-        this.cookietoken = cookietoken;
     }
 
-    public String getUsername() {
+    String getUsername() {
         return username;
-    }
-
-    public String getCookietoken() {
-        return cookietoken;
     }
 }

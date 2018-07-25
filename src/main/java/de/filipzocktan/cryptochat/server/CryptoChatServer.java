@@ -20,36 +20,36 @@ import java.util.*;
 public class CryptoChatServer {
 
     public static Crypto crypto;
-    public final int port;
-    List<User> users;
-    List<Handler> handlers;
-    List<String> usernames;
+    private final int port;
+    private List<User> users;
+    private List<Handler> handlers;
+    private List<String> usernames;
     public static SQLConfig sqlConfig;
-    boolean running1 = true;
+    private boolean running1 = true;
 
     //ChatSocket
-    ServerSocket chatSocket;
+    private ServerSocket chatSocket;
 
     //UserSocket
-    ServerSocket userSocket;
+    private ServerSocket userSocket;
 
     //KeySocket
-    ServerSocket keySocket;
+    private ServerSocket keySocket;
 
     //StatusSocket
-    ServerSocket statusSocket;
+    private ServerSocket statusSocket;
 
-    Timer consoleTimer;
+    private Timer consoleTimer;
 
-    User serverAsUser;
+    private User serverAsUser;
 
     public CryptoChatServer(int port) throws Exception {
         this.port = port;
         crypto = new Crypto();
-        chatSocket = new ServerSocket(port);
-        userSocket = new ServerSocket(port + 1);
-        keySocket = new ServerSocket(port + 2);
-        statusSocket = new ServerSocket(port + 3);
+        chatSocket = new ServerSocket(this.port);
+        userSocket = new ServerSocket(this.port + 1);
+        keySocket = new ServerSocket(this.port + 2);
+        statusSocket = new ServerSocket(this.port + 3);
         serverAsUser = new User(null);
         serverAsUser.setUsername("Server");
         sqlConfig = new SQLConfig();
@@ -110,7 +110,7 @@ public class CryptoChatServer {
         new CryptoChatServer(Integer.parseInt(args[0]));
     }
 
-    public void broadcastMessage(Message message) {
+    private void broadcastMessage(Message message) {
         for (User user : users) {
             user.sendMessage(message);
         }
@@ -126,7 +126,7 @@ public class CryptoChatServer {
         Timer statusTimer;
         boolean running = true;
 
-        public Handler(User user) {
+        private Handler(User user) {
             this.user = user;
         }
 
@@ -145,7 +145,7 @@ public class CryptoChatServer {
                                 if (input == null) {
                                     return;
                                 }
-                                if (input == "") {
+                                if (input.equals("")) {
                                     return;
                                 }
                                 if (!user.hasUsername()) {
@@ -178,7 +178,7 @@ public class CryptoChatServer {
                                 if (input == null) {
                                     return;
                                 }
-                                if (input == "") {
+                                if (input.equals("")) {
                                     return;
                                 }
 
@@ -191,11 +191,12 @@ public class CryptoChatServer {
                                                 String pw = "";
                                                 Statement stmt = sqlConfig.getSqlConnection().createStatement();
 
-                                                if (stmt.execute("SELECT PASSWORD, COUNT(*) as SIZE FROM cryptochat.users WHERE USERNAME = '" + inputArr[1] + "';")) {
+                                                if (stmt.execute("SELECT PASSWORD, UUID, COUNT(*) as SIZE FROM cryptochat.users WHERE USERNAME = '" + inputArr[1] + "';")) {
                                                     ResultSet rs = stmt.getResultSet();
                                                     rs.next();
                                                     if (rs.getInt("SIZE") == 1) {
                                                         pw = rs.getString("PASSWORD");
+                                                        user.setUuid(UUID.fromString(rs.getString("UUID")));
                                                     } else {
                                                         user.getSockets().getUserOut().print("LOGINANSWER;;WRONGUSER\n");
                                                         user.getSockets().getUserOut().flush();
@@ -311,7 +312,7 @@ public class CryptoChatServer {
             }
         }
 
-        public void stopThread() {
+        private void stopThread() {
             running = false;
             users.remove(user);
             this.chatTimer.cancel();

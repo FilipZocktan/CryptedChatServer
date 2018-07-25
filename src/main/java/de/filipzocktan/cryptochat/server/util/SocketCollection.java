@@ -72,19 +72,19 @@ public class SocketCollection {
         statusOut = statusOut1;
     }
 
-    public Socket getChatSocket() {
+    private Socket getChatSocket() {
         return chatSocket;
     }
 
-    public Socket getUserSocket() {
+    private Socket getUserSocket() {
         return userSocket;
     }
 
-    public Socket getKeySocket() {
+    private Socket getKeySocket() {
         return keySocket;
     }
 
-    public Socket getStatusSocket() {
+    private Socket getStatusSocket() {
         return statusSocket;
     }
 
@@ -92,7 +92,7 @@ public class SocketCollection {
         return chatIn;
     }
 
-    public PrintWriter getChatOut() {
+    PrintWriter getChatOut() {
         return chatOut;
     }
 

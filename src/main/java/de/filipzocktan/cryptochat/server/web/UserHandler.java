@@ -13,14 +13,14 @@ import java.util.*;
 
 import static j2html.TagCreator.fileAsString;
 
-public class UserHandler {
+class UserHandler {
 
-    public static HashMap<String, Webuser> loggedinUsers = new HashMap<>();
+    static HashMap<String, Webuser> loggedinUsers = new HashMap<>();
 
-    public static Route login = (request, response) -> {
+    static Route login = (request, response) -> {
         String username = request.queryParams("username");
         String pw = new String(Base64.getEncoder().encode(request.queryParams("password").getBytes()));
-        String pwcheck = "";
+        String pwcheck;
         Statement stmt = CryptoChatServer.sqlConfig.getSqlConnection().createStatement();
         if (stmt.execute("SELECT PASSWORD, COUNT(*) as SIZE FROM cryptochat.users WHERE USERNAME = '" + username + "';")) {
             ResultSet rs = stmt.getResultSet();
@@ -29,7 +29,7 @@ public class UserHandler {
                 pwcheck = rs.getString("PASSWORD");
                 if (pw.equals(pwcheck)) {
                     String cookietoken = UUID.randomUUID().toString();
-                    loggedinUsers.put(cookietoken, new Webuser(username, cookietoken));
+                    loggedinUsers.put(cookietoken, new Webuser(username));
                     response.cookie("/", "cryptochatserver.loginsession", cookietoken, 7200, false);
                     new Timer().schedule(new TimerTask() {
                         @Override
@@ -49,7 +49,7 @@ public class UserHandler {
         return fileAsString("/website/errors/500.html").render();
     };
 
-    public static Route logout = (request, response) -> {
+    static Route logout = (request, response) -> {
 
         String cookietoken = request.cookie("cryptochatserver.loginsession");
         if (loggedinUsers.containsKey(cookietoken)) {
@@ -62,7 +62,7 @@ public class UserHandler {
         return fileAsString("/website/errors/500.html").render();
     };
 
-    public static Route register = (request, response) -> {
+    static Route register = (request, response) -> {
 
         String username = request.queryParams("username");
         String pw = new String(Base64.getEncoder().encode(request.queryParams("password").getBytes()));
@@ -77,7 +77,7 @@ public class UserHandler {
                 if (rs.getInt("SIZE") == 0) {
                     if (!stmt2.execute("insert into cryptochat.users (UUID,USERNAME,PASSWORD) VALUES ('" + UUID.randomUUID().toString() + "', '" + username + "', '" + pw + "');")) {
                         String cookietoken = UUID.randomUUID().toString();
-                        loggedinUsers.put(cookietoken, new Webuser(username, cookietoken));
+                        loggedinUsers.put(cookietoken, new Webuser(username));
                         response.cookie("/", "cryptochatserver.loginsession", cookietoken, 7200, false);
                         response.redirect("/");
                     }

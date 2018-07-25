@@ -9,9 +9,9 @@ import spark.Response;
 
 import static j2html.TagCreator.fileAsString;
 
-public class WebPageBuilder {
+class WebPageBuilder {
 
-    public static String getSite(String undersite, Request req, Response resp) {
+    static String getSite(String undersite, Request req, Response resp) {
         String renderedSite = fileAsString("/website/basesite.html").render();
         String cookietoken = req.cookie("cryptochatserver.loginsession");
         String username = "";
