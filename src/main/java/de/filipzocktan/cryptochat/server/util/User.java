@@ -57,13 +57,13 @@ public class User {
     public boolean hasUsername() {
         if (username == null) {
             return false;
-        } else return !username.equals("");
+        } else return !"".equals(username);
     }
 
     private boolean hasNickname() {
         if (nickname == null) {
             return false;
-        } else return !nickname.equals("");
+        } else return !"".equals(nickname);
     }
 
     public PublicKey getPublicKey() {

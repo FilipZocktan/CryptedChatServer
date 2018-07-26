@@ -81,7 +81,7 @@ public class CryptoChatServer {
                                 consoleTimer.purge();
                                 System.out.println("Stopping server.");
                                 running1 = false;
-                                System.exit(0);
+                                Runtime.getRuntime().exit(0);
                                 break;
                         }
                     } catch (IOException e) {
@@ -155,7 +155,7 @@ public class CryptoChatServer {
                                 if (input == null) {
                                     return;
                                 }
-                                if (input.equals("")) {
+                                if ("".equals(input)) {
                                     return;
                                 }
                                 if (!user.hasUsername()) {
@@ -191,7 +191,7 @@ public class CryptoChatServer {
                                 if (input == null) {
                                     return;
                                 }
-                                if (input.equals("")) {
+                                if ("".equals(input)) {
                                     return;
                                 }
 
@@ -267,7 +267,7 @@ public class CryptoChatServer {
                                 if (input == null) {
                                     return;
                                 }
-                                if (input.equals("")) {
+                                if ("".equals(input)) {
                                     return;
                                 }
                                 user.setPublicKey(Base64.getDecoder().decode(input));
@@ -315,6 +315,7 @@ public class CryptoChatServer {
                                                 out.flush();
                                             }
                                         }, 5000);
+                                        break;
                                 }
                             }
 

@@ -15,7 +15,7 @@ class StandardRoutes {
         if (UserHandler.loggedinUsers.containsKey(cookietoken)) {
             username = UserHandler.loggedinUsers.get(cookietoken).getUsername();
         }
-        if (username.equals("")) {
+        if ("".equals(username)) {
             return WebPageBuilder.getSite("inDexout", request, response);
         } else {
             return WebPageBuilder.getSite("indexin", request, response);

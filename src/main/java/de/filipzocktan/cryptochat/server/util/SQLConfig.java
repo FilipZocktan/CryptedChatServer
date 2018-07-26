@@ -85,7 +85,7 @@ public class SQLConfig {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
-            System.exit(0);
+            Runtime.getRuntime().exit(0);
         }
         System.out.println("MySQL Connected.");
         try {

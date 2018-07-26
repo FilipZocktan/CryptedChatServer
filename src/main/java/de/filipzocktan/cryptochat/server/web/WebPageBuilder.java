@@ -18,7 +18,7 @@ class WebPageBuilder {
         if (UserHandler.loggedinUsers.containsKey(cookietoken)) {
             username = UserHandler.loggedinUsers.get(cookietoken).getUsername();
         }
-        if (username.equals("")) {
+        if ("".equals(username)) {
             renderedSite = renderedSite.replaceAll("ITEM", fileAsString("/website/parts/menu/loggedout.html").render());
         } else {
             renderedSite = renderedSite.replaceAll("ITEM", fileAsString("/website/parts/menu/loggedin.html").render());
