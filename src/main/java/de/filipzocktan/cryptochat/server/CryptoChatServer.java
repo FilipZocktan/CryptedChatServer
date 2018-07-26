@@ -8,7 +8,6 @@ import de.filipzocktan.util.chat.Message;
 import de.filipzocktan.util.crypto.Crypto;
 import io.sentry.Sentry;
 
-import javax.naming.OperationNotSupportedException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -67,14 +66,6 @@ public class CryptoChatServer {
                     try {
                         String input = reader.readLine();
                         switch (input.toUpperCase()) {
-                            case "SENTRYTAEST":
-                                try {
-                                    throw new OperationNotSupportedException("The user tested the Sentry-int");
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                    Sentry.capture(ex);
-                                }
-                                break;
                             case "STOP":
                                 System.out.println("test");
                                 for (Handler h : handlers) {
