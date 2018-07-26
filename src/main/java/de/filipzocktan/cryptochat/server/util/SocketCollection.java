@@ -1,5 +1,7 @@
 package de.filipzocktan.cryptochat.server.util;
 
+import io.sentry.Sentry;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -136,6 +138,7 @@ public class SocketCollection {
             getStatusSocket().close();
         } catch (IOException e) {
             e.printStackTrace();
+            Sentry.capture(e);
         }
     }
 

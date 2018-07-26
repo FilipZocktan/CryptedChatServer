@@ -2,6 +2,7 @@ package de.filipzocktan.cryptochat.server.util;
 
 import de.filipzocktan.util.general.Filetype;
 import de.filipzocktan.util.general.ZocFile;
+import io.sentry.Sentry;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -29,6 +30,7 @@ public class SQLConfig {
             reloadConfig();
         } catch (IOException e) {
             e.printStackTrace();
+            Sentry.capture(e);
         }
     }
 
@@ -94,6 +96,7 @@ public class SQLConfig {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
+            Sentry.capture(ex);
         }
     }
 

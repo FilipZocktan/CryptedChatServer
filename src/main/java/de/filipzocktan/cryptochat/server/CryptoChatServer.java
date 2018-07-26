@@ -6,7 +6,9 @@ import de.filipzocktan.cryptochat.server.util.User;
 import de.filipzocktan.cryptochat.server.web.Web;
 import de.filipzocktan.util.chat.Message;
 import de.filipzocktan.util.crypto.Crypto;
+import io.sentry.Sentry;
 
+import javax.naming.OperationNotSupportedException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,11 +22,11 @@ import java.util.*;
 public class CryptoChatServer {
 
     public static Crypto crypto;
+    public static SQLConfig sqlConfig;
     private final int port;
     private List<User> users;
     private List<Handler> handlers;
     private List<String> usernames;
-    public static SQLConfig sqlConfig;
     private boolean running1 = true;
 
     //ChatSocket
@@ -65,6 +67,14 @@ public class CryptoChatServer {
                     try {
                         String input = reader.readLine();
                         switch (input.toUpperCase()) {
+                            case "SENTRYTAEST":
+                                try {
+                                    throw new OperationNotSupportedException("The user tested the Sentry-int");
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                    Sentry.capture(ex);
+                                }
+                                break;
                             case "STOP":
                                 System.out.println("test");
                                 for (Handler h : handlers) {
@@ -85,6 +95,7 @@ public class CryptoChatServer {
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
+                        Sentry.capture(e);
                     }
                 }
             }
@@ -99,13 +110,21 @@ public class CryptoChatServer {
                 handlers.add(h);
                 h.start();
             } catch (IOException e) {
-                if (running1)
+                if (running1) {
                     e.printStackTrace();
+                    Sentry.capture(e);
+                }
             }
         }
     }
 
     public static void main(String[] args) throws Exception {
+
+        //start senrty logger instance
+        Sentry.init();
+
+
+        //Start Webserver and ChatServer
         new Web();
         new CryptoChatServer(Integer.parseInt(args[0]));
     }
@@ -158,10 +177,13 @@ public class CryptoChatServer {
                                 broadcastMessage(new Message(user, message));
 
                             } catch (SocketException e) {
-                                if (running)
+                                if (running) {
                                     e.printStackTrace();
+                                    Sentry.capture(e);
+                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
+                                Sentry.capture(e);
                             }
                         }
                     }
@@ -231,10 +253,13 @@ public class CryptoChatServer {
                                         break;
                                 }
                             } catch (SocketException e) {
-                                if (running)
+                                if (running) {
                                     e.printStackTrace();
+                                    Sentry.capture(e);
+                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
+                                Sentry.capture(e);
                             }
                         }
                     }
@@ -259,10 +284,13 @@ public class CryptoChatServer {
                                 user.getSockets().getKeyOut().flush();
 
                             } catch (SocketException e) {
-                                if (running)
+                                if (running) {
                                     e.printStackTrace();
+                                    Sentry.capture(e);
+                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
+                                Sentry.capture(e);
                             }
                         }
                     }
@@ -300,15 +328,19 @@ public class CryptoChatServer {
                             }
 
                         } catch (SocketException e) {
-                            if (running)
+                            if (running) {
                                 e.printStackTrace();
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
+                                Sentry.capture(e);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Sentry.capture(e);
                         }
                     }
                 }, 0);
             } catch (Exception e) {
                 e.printStackTrace();
+                Sentry.capture(e);
             }
         }
 

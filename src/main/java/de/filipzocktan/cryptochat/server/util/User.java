@@ -2,6 +2,7 @@ package de.filipzocktan.cryptochat.server.util;
 
 import de.filipzocktan.cryptochat.server.CryptoChatServer;
 import de.filipzocktan.util.chat.Message;
+import io.sentry.Sentry;
 
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -102,6 +103,7 @@ public class User {
             getSockets().getChatOut().flush();
         } catch (Exception e) {
             e.printStackTrace();
+            Sentry.capture(e);
         }
     }
 }
