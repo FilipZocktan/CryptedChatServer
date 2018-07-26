@@ -4,7 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Error 500 - Server Error</title>
-    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+    <link rel='stylesheet prefetch'
+          href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+    <script src="https://cdn.ravenjs.com/3.26.4/raven.min.js" crossorigin="anonymous"></script>
+    <script>
+        Raven.config('https://77c3c11cfe284e418427a6a1b722b79f@sentry.io/1250290').install();
+        Raven.setEnvironment("webserver")
+    </script>
     <link rel="stylesheet" href="/style/error.css">
 </head>
 <body>
@@ -17,5 +23,9 @@
 <div id="particles-js"></div>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'></script>
 <script src="/js/error.js"></script>
+<script>
+    Raven.captureMessage("500");
+    Raven.showReportDialog();
+</script>
 </body>
 </html>

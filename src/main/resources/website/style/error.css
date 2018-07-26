@@ -11,6 +11,7 @@ html, body {
     height: 100%;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
+
 .error-page h1 {
     font-size: 30vh;
     font-weight: bold;
@@ -18,6 +19,7 @@ html, body {
     margin: -8vh 0 0;
     padding: 0;
 }
+
 .error-page h1:after {
     content: attr(data-h1);
     position: absolute;
@@ -33,6 +35,7 @@ html, body {
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.25);
     animation: animateTextBackground 10s ease-in-out infinite;
 }
+
 .error-page h1 + p {
     color: #d6d6d6;
     font-size: 8vh;
@@ -41,6 +44,7 @@ html, body {
     max-width: 600px;
     position: relative;
 }
+
 .error-page h1 + p:after {
     content: attr(data-p);
     position: absolute;
@@ -50,8 +54,6 @@ html, body {
     color: transparent;
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
     -webkit-background-clip: text;
-    -moz-background-clip: text;
-    background-clip: text;
 }
 
 #particles-js {
@@ -79,10 +81,12 @@ html, body {
         background-position: 0 0;
     }
 }
+
 @media (max-width: 767px) {
     .error-page h1 {
         font-size: 32vw;
     }
+
     .error-page h1 + p {
         font-size: 8vw;
         line-height: 10vw;
