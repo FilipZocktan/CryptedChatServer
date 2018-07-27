@@ -25,11 +25,11 @@ body {
 }
 
 .jumbotron small a {
-    color: #6c757d !important;
+    color: #6c757d;
 }
 
 .jumbotron small a:hover {
-    color: white !important;
+    color: white;
 }
 
 .footer {
@@ -42,12 +42,12 @@ body {
 }
 
 footer span a {
-    color: #6c757d !important;
-    text-decoration-line: underline !important;
+    color: #6c757d;
+    text-decoration-line: underline;
 }
 
 footer span a:hover {
-    color: black !important;
+    color: black;
 }
 
 .navbar-light .navbar-nav .nav-link {
