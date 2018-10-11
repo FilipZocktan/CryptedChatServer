@@ -38,7 +38,7 @@
         <dependency>
             <groupId>io.sentry</groupId>
             <artifactId>sentry</artifactId>
-            <version>1.7.5</version>
+            <version>1.7.12</version>
         </dependency>
     </dependencies>
 
